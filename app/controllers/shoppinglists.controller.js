@@ -106,7 +106,7 @@ exports.delete = (req, res) => {
                     message: "Shoppinglist not found with id " + req.params.shoppinglistId
                 });
             }
-            res.send({message: "Shoppinglist deleted successfully!"});
+            res.send({message: "Shoppinglist deleted successfully!", deletedId: req.params.shoppinglistId});
         }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
