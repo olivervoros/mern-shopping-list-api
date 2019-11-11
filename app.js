@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Configuring the database
-const dbConfig = require('./config/database.config.js');
+const dbConfig = require('./config/config');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -33,6 +33,10 @@ mongoose.connect(dbConfig.url, {
 app.get('/', (req, res) => {
   res.json({"message": "Welcome to Oliver's Shopping List API"});
 });
+
+let AuthController = require('./app/controllers/auth.controller.js');
+app.use('/api/auth', AuthController);
+module.exports = app;
 
 require('./routes/shoppinglist.js')(app);
 

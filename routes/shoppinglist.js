@@ -1,21 +1,22 @@
 module.exports = (app) => {
 
-    const shoppinglists = require('../app/controllers/shoppinglists.controller.js');
+    const shoppinglists = require('../app/controllers/shoppinglists.controller');
+    const VerifyToken = require('../app/auth/VerifyToken');
 
-    // Create a new Note
-    app.post('/shoppinglists', shoppinglists.create);
+    // Create a new Shopping List
+    app.post('/shoppinglists', VerifyToken, shoppinglists.create);
 
-    // Retrieve all Notes
-    app.get('/shoppinglists', shoppinglists.findAll);
+    // Retrieve all Shopping Lists
+    app.get('/shoppinglists', VerifyToken, shoppinglists.findAll);
 
-    // Retrieve a single Note with noteId
-    app.get('/shoppinglists/:shoppinglistId', shoppinglists.findOne);
+    // Retrieve a single Shopping List with shoppinglistId
+    app.get('/shoppinglists/:shoppinglistId', VerifyToken, shoppinglists.findOne);
 
-    // Update a Note with noteId
-    app.put('/shoppinglists/:shoppinglistId', shoppinglists.update);
+    // Update a Shopping List with shoppinglistId
+    app.put('/shoppinglists/:shoppinglistId', VerifyToken, shoppinglists.update);
 
-    // Delete a Note with noteId
-    app.delete('/shoppinglists/:shoppinglistId', shoppinglists.delete);
+    // Delete a Shopping List with shoppinglistId
+    app.delete('/shoppinglists/:shoppinglistId', VerifyToken, shoppinglists.delete);
 
 }
 
