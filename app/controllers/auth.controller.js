@@ -1,17 +1,9 @@
-let express = require('express');
-let router = express.Router();
-let bodyParser = require('body-parser');
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
 let User = require('../models/user.model');
-
 let jwt = require('jsonwebtoken');
 let bcrypt = require('bcryptjs');
 let config = require('../../config/config');
 
-let VerifyToken = require('../auth/VerifyToken');
-
-router.post('/register', function(req, res) {
+exports.create = (req, res) => {
 
     let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
@@ -24,13 +16,13 @@ router.post('/register', function(req, res) {
             if (err) return res.status(500).send("There was a problem registering the user.")
             // create a token
             let token = jwt.sign({ id: user._id }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
+                expiresIn: 21600 // expires in 6 hours
             });
             res.status(200).send({ auth: true, token: token });
         });
-});
+};
 
-router.get('/me', VerifyToken, function(req, res) {
+exports.getMe = (req, res) => {
     let token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -46,9 +38,30 @@ router.get('/me', VerifyToken, function(req, res) {
                 res.status(200).send(user);
             });
     });
-});
+};
 
-router.post('/login', function(req, res) {
+exports.delete = (req, res) => {
+    User.findByIdAndRemove(req.params.userId)
+        .then(user => {
+            if(!user) {
+                return res.status(404).send({
+                    message: "User not found with id " + req.params.userId
+                });
+            }
+            res.send({message: "User deleted successfully!", deletedId: req.params.userId});
+        }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });
+        }
+        return res.status(500).send({
+            message: "Could not delete User with id " + req.params.userId
+        });
+    });
+}
+
+exports.login = (req, res) => {
 
     User.findOne({ email: req.body.email }, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
@@ -58,16 +71,14 @@ router.post('/login', function(req, res) {
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
         let token = jwt.sign({ id: user._id }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
+            expiresIn: 21600 // expires in 6 hours
         });
 
         res.status(200).send({ auth: true, token: token });
     });
 
-});
+};
 
-router.get('/logout', function(req, res) {
+exports.logout = (req, res) => {
     res.status(200).send({ auth: false, token: null });
-});
-
-module.exports = router;
+};

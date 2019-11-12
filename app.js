@@ -34,11 +34,8 @@ app.get('/', (req, res) => {
   res.json({"message": "Welcome to Oliver's Shopping List API"});
 });
 
-let AuthController = require('./app/controllers/auth.controller.js');
-app.use('/api/auth', AuthController);
-module.exports = app;
-
-require('./routes/shoppinglist.js')(app);
+require('./routes/auth.route.js')(app);
+require('./routes/shoppinglist.route.js')(app);
 
 // listen for requests
 app.listen(2000, () => {
