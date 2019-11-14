@@ -14,13 +14,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Configuring the database
-const dbConfig = require('./config/config');
+const dotenv = require('dotenv');
+dotenv.config();
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
-mongoose.connect(dbConfig.url, {
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {
   console.log("Successfully connected to the database");
@@ -38,6 +39,6 @@ require('./routes/auth.route.js')(app);
 require('./routes/shoppinglist.route.js')(app);
 
 // listen for requests
-app.listen(2000, () => {
-  console.log("Server is listening on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log("Server is listening on port " + process.env.PORT);
 });

@@ -1,7 +1,8 @@
 let User = require('../models/user.model');
 let jwt = require('jsonwebtoken');
 let bcrypt = require('bcryptjs');
-let config = require('../../config/config');
+const dotenv = require('dotenv');
+dotenv.config();
 
 exports.create = (req, res) => {
 
@@ -15,7 +16,7 @@ exports.create = (req, res) => {
         function (err, user) {
             if (err) return res.status(500).send("There was a problem registering the user.")
             // create a token
-            let token = jwt.sign({ id: user._id }, config.secret, {
+            let token = jwt.sign({ id: user._id }, process.env.SECRET, {
                 expiresIn: 21600 // expires in 6 hours
             });
             res.status(200).send({ auth: true, token: token });
@@ -26,7 +27,7 @@ exports.getMe = (req, res) => {
     let token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
-    jwt.verify(token, config.secret, function(err, decoded) {
+    jwt.verify(token, process.env.SECRET, function(err, decoded) {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
         User.findById(decoded.id,
@@ -70,7 +71,7 @@ exports.login = (req, res) => {
         let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-        let token = jwt.sign({ id: user._id }, config.secret, {
+        let token = jwt.sign({ id: user._id }, process.env.SECRET, {
             expiresIn: 21600 // expires in 6 hours
         });
 
