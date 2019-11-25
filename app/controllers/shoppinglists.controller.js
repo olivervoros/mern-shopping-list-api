@@ -13,7 +13,6 @@ exports.create = (req, res) => {
     const shoppinglist = new Shoppinglist({
         title: req.body.title,
         author: req.body.author,
-        date: req.body.date,
         items: req.body.items
     });
 
@@ -75,7 +74,6 @@ exports.update = (req, res) => {
     Shoppinglist.findByIdAndUpdate(req.params.shoppinglistId, {
         title: req.body.title,
         author: req.body.author,
-        date: req.body.date,
         items: req.body.items
     }, {new: true})
         .then(shoppinglist => {

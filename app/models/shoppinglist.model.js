@@ -5,7 +5,6 @@ mongoose.set('useFindAndModify', false);
 const ShoppinglistSchema = mongoose.Schema({
     "title": String,
     "author": String,
-    "date": { type: "date", default: Date.now },
     "items": {}
 }, {
     timestamps: true
