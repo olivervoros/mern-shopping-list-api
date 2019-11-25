@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all shopping list items from the database.
 exports.findAll = (req, res) => {
-    Shoppinglist.find()
+    Shoppinglist.find().sort({createdAt: 1})
         .then(shoppinglists => {
             res.send(shoppinglists);
         }).catch(err => {
