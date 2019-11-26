@@ -76,7 +76,7 @@ exports.update = (req, res) => {
         title: req.body.title,
         author: req.body.author,
         items: req.body.items,
-        completed: 0
+        completed: req.body.completed || 0
     }, {new: true})
         .then(shoppinglist => {
             if(!shoppinglist) {
