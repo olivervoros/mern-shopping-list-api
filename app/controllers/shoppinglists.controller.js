@@ -13,7 +13,8 @@ exports.create = (req, res) => {
     const shoppinglist = new Shoppinglist({
         title: req.body.title,
         author: req.body.author,
-        items: req.body.items
+        items: req.body.items,
+        completed: 0
     });
 
     // Save Shoppinglist in the database
@@ -74,7 +75,8 @@ exports.update = (req, res) => {
     Shoppinglist.findByIdAndUpdate(req.params.shoppinglistId, {
         title: req.body.title,
         author: req.body.author,
-        items: req.body.items
+        items: req.body.items,
+        completed: 0
     }, {new: true})
         .then(shoppinglist => {
             if(!shoppinglist) {
