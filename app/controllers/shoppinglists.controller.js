@@ -33,7 +33,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Shoppinglist.find({ userId : req.body.userId }).sort({createdAt: -1})
+    Shoppinglist.find({ userId : req.params.userId }).sort({createdAt: -1})
         .then(shoppingLists => {
             res.send(shoppingLists);
         }).catch(err => {
@@ -44,7 +44,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Shoppinglist.find({ _id : req.params.shoppinglistId, userId: req.body.userId })
+    Shoppinglist.find({ _id : req.params.shoppinglistId, userId: req.params.userId })
         .then(shoppingList => {
             if(!shoppingList) {
                 return res.status(404).send({
