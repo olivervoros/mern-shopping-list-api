@@ -7,6 +7,8 @@ module.exports = (app) => {
 
     app.get('/api/me', VerifyToken, auth.getMe);
 
+    app.get('/api/users', VerifyToken, auth.getAll);
+
     app.delete('/api/me/:userId', VerifyToken, auth.delete);
 
     app.post('/api/login', auth.login);
