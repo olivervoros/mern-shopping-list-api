@@ -83,7 +83,7 @@ exports.delete = (req, res) => {
 
 exports.login = (req, res) => {
 
-    User.findOne({ household: req.body.household }, function (err, user) {
+    User.findOne({ household: req.body.household, password: req.body.password }, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
 
