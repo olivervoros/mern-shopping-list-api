@@ -6,6 +6,7 @@ const ShoppinglistSchema = mongoose.Schema({
     "title": String,
     "author": String,
     "userId" : String,
+    "household": String,
     "items": {}
 }, {
     timestamps: true
