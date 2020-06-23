@@ -18,6 +18,7 @@ exports.create = (req, res) => {
         title: req.body.title,
         author: req.body.author,
         userId: req.body.userId,
+        household: req.body.household,
         items: req.body.items,
         completed: 0
     });
@@ -76,6 +77,7 @@ exports.update = (req, res) => {
         title: req.body.title,
         author: req.body.author,
         userId: req.body.userId,
+        household: req.body.household,
         items: req.body.items,
         completed: req.body.completed || 0
     }, {new: true})
