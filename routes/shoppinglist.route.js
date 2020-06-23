@@ -10,7 +10,7 @@ module.exports = (app) => {
     app.get('/api/shoppinglists/:household', VerifyToken, shoppinglists.findAll);
 
     // Retrieve a single Shopping List with shoppinglistId
-    app.get('/api/shoppinglists/:shoppinglistId/:userId', VerifyToken, shoppinglists.findOne);
+    app.get('/api/shoppinglists/:shoppinglistId/:household', VerifyToken, shoppinglists.findOne);
 
     // Update a Shopping List with shoppinglistId
     app.put('/api/shoppinglists/:shoppinglistId', VerifyToken, shoppinglists.update);

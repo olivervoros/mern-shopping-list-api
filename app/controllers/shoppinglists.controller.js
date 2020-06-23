@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Shoppinglist.find({ _id : req.params.shoppinglistId, userId: req.params.userId })
+    Shoppinglist.find({ _id : req.params.shoppinglistId, household: req.params.household })
         .then(shoppingList => {
             if(!shoppingList) {
                 return res.status(404).send({
