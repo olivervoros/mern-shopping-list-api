@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.post('/api/shoppinglists', VerifyToken, shoppinglists.create);
 
     // Retrieve all Shopping Lists
-    app.get('/api/shoppinglists/:userId', VerifyToken, shoppinglists.findAll);
+    app.get('/api/shoppinglists/:household', VerifyToken, shoppinglists.findAll);
 
     // Retrieve a single Shopping List with shoppinglistId
     app.get('/api/shoppinglists/:shoppinglistId/:userId', VerifyToken, shoppinglists.findOne);

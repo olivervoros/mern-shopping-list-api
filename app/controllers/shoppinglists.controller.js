@@ -33,7 +33,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Shoppinglist.find({ userId : req.params.userId }).sort({createdAt: -1})
+    Shoppinglist.find({ household : req.params.household }).sort({createdAt: -1})
         .then(shoppingLists => {
             res.send(shoppingLists);
         }).catch(err => {
